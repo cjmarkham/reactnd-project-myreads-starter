@@ -4,6 +4,7 @@ import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import LaunchPage from './pages/launch'
 import SearchPage from './pages/search'
+import sortBy from 'sort-by'
 
 export default class extends React.Component {
   state = {
@@ -21,6 +22,7 @@ export default class extends React.Component {
 
   getAllBooks () {
     BooksAPI.getAll().then(books => {
+      books.sort(sortBy('title'))
       this.setState({ books })
     })
   }
@@ -38,6 +40,7 @@ export default class extends React.Component {
         },
         // Remove the book from the state and re-add it with the updated shelf property
         books: state.books.filter(_book => book.id !== _book.id).concat([book]),
+        books: state.books.filter(_book => book.id !== _book.id).concat([book]).sort(sortBy('title')),
       }))
     })
   }
