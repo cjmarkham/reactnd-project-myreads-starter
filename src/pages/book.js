@@ -32,14 +32,12 @@ export default class extends React.Component {
       this.setState({ book, loading: false })
     }).catch(error => {
       // Unknown book will throw a 500
-      console.error(error)
       this.setState({ loading: false, error: 'Could not find that book' })
     })
   }
 
   render () {
     const { loading, error, book } = this.state
-    console.log(book)
 
     if (loading) {
       return (
