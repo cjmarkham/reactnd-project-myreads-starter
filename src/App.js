@@ -42,16 +42,32 @@ export default class extends React.Component {
     })
   }
 
+  rateBook = (book, rating) => {
+    book.rating = rating
+
+    // Remove the book from the state and re-add it with the updated rating property
+    this.setState(state => ({
+      books: state.books.filter(_book => book.id !== _book.id).concat([book]).sort(sortBy('title')),
+    }))
+  }
+
   render() {
     const { shelves, books } = this.state
 
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchPage books={books} onMoveBook={(book, shelf) => this.moveBook(book, shelf)} />
+          <SearchPage
+            myBooks={books}
+            onRateBook={(book, rating) => this.rateBook(book, rating)}
+            onMoveBook={(book, shelf) => this.moveBook(book, shelf)} />
         )} />
         <Route exact path="/" render={() => (
-          <LaunchPage shelves={shelves} books={books} onMoveBook={(book, shelf) => this.moveBook(book, shelf)} />
+          <LaunchPage
+            shelves={shelves}
+            books={books}
+            onRateBook={(book, rating) => this.rateBook(book, rating)}
+            onMoveBook={(book, shelf) => this.moveBook(book, shelf)} />
         )} />
       </div>
     )
