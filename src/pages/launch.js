@@ -1,18 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Book from '../book'
+import Book from '../partials/book'
 
 export default class extends React.Component {
   static propTypes = {
+    shelves: PropTypes.object.isRequired,
+    books: PropTypes.array.isRequired,
     onMoveBook: PropTypes.func.isRequired,
+    onRateBook: PropTypes.func.isRequired,
   }
 
   // Simple abstraction to render shelved books
   renderShelvedBook = (book) => {
     return (
       <li key={book.id}>
-        <Book book={book} onMoveBook={this.props.onMoveBook} />
+        <Book
+          book={book}
+          onRateBook={this.props.onRateBook}
+          onMoveBook={this.props.onMoveBook} />
       </li>
     )
   }

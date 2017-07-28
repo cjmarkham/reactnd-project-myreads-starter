@@ -4,6 +4,7 @@ import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import LaunchPage from './pages/launch'
 import SearchPage from './pages/search'
+import BookPage from './pages/book'
 import sortBy from 'sort-by'
 
 export default class extends React.Component {
@@ -39,7 +40,6 @@ export default class extends React.Component {
           read: shelves.read,
         },
         // Remove the book from the state and re-add it with the updated shelf property
-        books: state.books.filter(_book => book.id !== _book.id).concat([book]),
         books: state.books.filter(_book => book.id !== _book.id).concat([book]).sort(sortBy('title')),
       }))
     })
@@ -59,6 +59,13 @@ export default class extends React.Component {
 
     return (
       <div className="app">
+        <Route path="/book/:id" render={route => (
+          <BookPage
+            bookId={route.match.params.id}
+            myBooks={books}
+            onRateBook={(book, rating) => this.rateBook(book, rating)}
+            onMoveBook={(book, shelf) => this.moveBook(book, shelf)} />
+        )} />
         <Route path="/search" render={() => (
           <SearchPage
             myBooks={books}
